@@ -62,11 +62,21 @@ public class Player {
         this.experience += Math.max(0, exp);
     }
 
+    // Helper method to get the XP needed for the next level
+    public int getExperienceRequiredForNextLevel() {
+        return level * 100;
+    }
+
     public void levelUp() {
         level++;
+        // Skills increase, capped at 10
         bargaining = Math.min(10, bargaining + 1);
         marketSense = Math.min(10, marketSense + 1);
-        System.out.println("Level up! Now level " + level + "! Bargaining: " + bargaining + ", Market Sense: " + marketSense);
+        System.out.println("\n*** LEVEL UP! ***");
+        System.out.println("You've reached Level " + level + "!");
+        System.out.println("Bargaining skill increased to: " + bargaining);
+        System.out.println("Market Sense skill increased to: " + marketSense);
+        System.out.println("Keep hustling, " + name + "!\n");
     }
 
     public int getBargaining() {
@@ -90,7 +100,7 @@ public class Player {
         return "Player [Name=" + name +
                ", Bankroll=$" + String.format("%.2f", bankroll) +
                ", Level=" + level +
-               ", XP=" + experience + "/" + (level * 100) +
+               ", XP=" + experience + "/" + getExperienceRequiredForNextLevel() +
                ", Bargaining=" + bargaining +
                ", Market Sense=" + marketSense + "]";
     }
