@@ -1,19 +1,58 @@
 ﻿# HustleEmpire
-A Java 17 console game where you flip items from markets to grow your bankroll.
+
+A text-based console game built with Java 17, where you embody a budding entrepreneur, navigating various markets to buy low, sell high, and build your bankroll to become a true "Hustle Empire" legend!
+
+## Features
+
+* **Player Customization:** Create your unique hustler, with an option for an auto-generated name.
+* **Skill Allocation:** Distribute initial skill points between:
+    * **Bargaining:** Get better deals when buying items.
+    * **Market Sense:** Maximize your profit when selling items.
+* **Dynamic Gameplay Loop:** Engage in continuous rounds of buying and selling until you hit the win condition (reach $500 bankroll) or the lose condition (bankroll drops to $0).
+* **Leveling System:** Gain experience (XP) with each successful transaction, level up, and incrementally improve your skills.
+* **Interactive Scenes:**
+    * **Yard Sale:** Start small, finding everyday items and honing your bargaining skills.
+    * **Flea Market:** Step up your game with higher-value items, offering bigger risks and rewards.
+* **Randomized Outcomes:** Experience the unpredictable nature of the market with random item selection, price fluctuations, and occasional "loss events."
+* **Replayability:** Option to restart a new game session after winning or losing.
 
 ## How to Run
-1. Clone: git clone https://github.com/jeffgsherwood/hustle-empire.git
-2. Compile: cd src; javac com/jeffsherwood/hustleempire/*.java
-3. Run: java com.jeffsherwood/hustleempire.Main
 
- ## Progress
-- Player creation with name, bargaining, market sense, level, XP.
-- Started Main class. Got to Player Creation.
-- Brainstormed scene ideas: Flea Market, Thrift Store, Estate Auction, Yard Sale, Retail Arbitrage
-- Brainstormed Game loop with end scenarios ( broke, ,000 win).
-- TODO: Add scenes.Add Game loop.
+### Prerequisites
+* Java Development Kit (JDK) 17 or higher installed on your system.
 
-## Notes
-- Using Java 17 with Scanner for console input.
-- Player skills (bargaining, market sense) affect buying/selling outcomes.
-- Scenes involve buying low, selling high on eBay with random outcomes.
+### Steps
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/jeffgsherwood/hustle-empire.git](https://github.com/jeffgsherwood/hustle-empire.git)
+    ```
+2.  **Navigate to the Project Directory:**
+    ```bash
+    cd hustle-empire
+    ```
+3.  **Compile the Source Code:**
+    ```bash
+    javac -d . src/com/jeffsherwood/hustleempire/*.java
+    ```
+    *(Note: The `-d .` compiles into the current directory, placing the `com` package folder directly. If your `src` folder is the root of your project, you'd adjust this slightly, but this is a common setup.)*
+4.  **Run the Game:**
+    ```bash
+    java com.jeffsherwood.hustleempire.Main
+    ```
+
+## Project Status / To-Do
+
+* **Core Gameplay Loop:** Implemented and functional.
+* **Player Management:** Fully implemented (name, bankroll, skills, level, XP).
+* **Playable Scenes:**
+    * Yard Sale (Functional)
+    * Flea Market (Functional)
+* **Future Scenes (Coming Soon):**
+    * Thrift Store
+    * Estate Sale
+    * Retail Arbitrage
+* **Inventory System:** Currently, items are bought and sold within the same scene. Future enhancement to allow players to hold items and sell them at a later time/location.
+* **More Item Variety & Dynamics:** Expand item lists and introduce more complex item characteristics (e.g., condition, rarity).
+* **Refactor `SaleItem`:** Move the `SaleItem` inner class to its own dedicated file for better reusability across scenes.
+
+---
