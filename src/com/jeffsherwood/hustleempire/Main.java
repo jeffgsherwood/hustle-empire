@@ -92,7 +92,7 @@ public class Main {
 
                 System.out.println("\nWhere you hustlin’ today, " + player.getName() + "?");
                 System.out.println("(1) Yard Sale");
-                System.out.println("(2) Flea Market (coming soon)");
+                System.out.println("(2) Flea Market");
                 System.out.println("(3) Thrift Store (coming soon)");
                 System.out.println("(4) Estate Sale (coming soon)");
                 System.out.println("(5) Retail Arbitrage (coming soon)");
@@ -108,10 +108,10 @@ public class Main {
                         if (choice >= 1 && choice <= 6) {
                             break; // Valid input
                         } else {
-                            System.out.println("Yo, enter a number between 1 and 6!");
+                            System.out.println("Please enter a number between 1 and 6!");
                         }
                     } else {
-                        System.out.println("Yo, enter a number between 1 and 6!");
+                        System.out.println("Please enter a number between 1 and 6!");
                         scanner.next(); // Clear invalid input
                         scanner.nextLine(); // Consume leftover newline after scanner.next()
                     }
@@ -132,19 +132,18 @@ public class Main {
                         scene = new YardSaleScene();
                         break;
                     case 2:
-                        System.out.println("Flea Market ain’t open yet, homie! Try Yard Sale.");
-                        scenePlayedSuccessfully = false;
-                        continue; // Skip to next loop iteration
+                        scene = new FleaMarketScene();
+                        break;
                     case 3:
-                        System.out.println("Thrift Store ain’t ready, homie! Try Yard Sale.");
+                        System.out.println("Thrift Store ain’t ready, homie! Try Yard Sale or Flea Market.");
                         scenePlayedSuccessfully = false;
                         continue; // Skip to next loop iteration
                     case 4:
-                        System.out.println("Estate Sale not set up yet, homie! Try Yard Sale.");
+                        System.out.println("Estate Sale not set up yet, homie! Try Yard Sale or Flea Market.");
                         scenePlayedSuccessfully = false;
                         continue; // Skip to next loop iteration
                     case 5:
-                        System.out.println("Retail Arbitrage comin’ soon, homie! Try Yard Sale.");
+                        System.out.println("Retail Arbitrage comin’ soon, homie! Try Yard Sale or Flea Market.");
                         scenePlayedSuccessfully = false;
                         continue; // Skip to next loop iteration
                     default: // Should not be reached due to input validation
