@@ -2,32 +2,17 @@ package com.jeffsherwood.hustleempire;
 
 import java.util.Scanner;
 import java.util.Random;
-import java.util.ArrayList; // For dynamic list
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections; // For shuffling list
-import java.util.List; // Using List for easier item management
+import java.util.Collections;
+import java.util.List;
 
 public class YardSaleScene extends Scene {
 
-    // Inner class to represent an item, acting like a data structure
-    private static class SaleItem {
-        String name;
-        double basePrice;
-        double maxResell;
+    // The inner SaleItem class definition has been COMPLETELY REMOVED from this file.
+    // SaleItem is now a separate class in SaleItem.java.
 
-        public SaleItem(String name, double basePrice, double maxResell) {
-            this.name = name;
-            this.basePrice = basePrice;
-            this.maxResell = maxResell;
-        }
-
-        @Override
-        public String toString() {
-            return name + " - Price: $" + String.format("%.2f", basePrice) + " - Resell Value: up to $" + String.format("%.2f", maxResell);
-        }
-    }
-
-    // List of all possible items 
+    // List of all possible items
     private static final List<SaleItem> ALL_POSSIBLE_ITEMS = Arrays.asList(
         new SaleItem("Antique oil lamp", 30.0, 75.0),
         new SaleItem("Framed art work", 50.0, 125.0),
@@ -55,12 +40,12 @@ public class YardSaleScene extends Scene {
         // Main loop for item selection
         while (true) {
             System.out.println("\nHere are some items you found. Choose wisely...");
-            
+
             // Temporary list of items for this round to ensure uniqueness
             List<SaleItem> currentAvailableItems = new ArrayList<>(ALL_POSSIBLE_ITEMS);
             Collections.shuffle(currentAvailableItems, random); // Shuffle to randomize order
 
-            // Select 3 unique items for the current visit 
+            // Select 3 unique items for the current visit
             SaleItem[] currentItems = new SaleItem[Math.min(3, currentAvailableItems.size())];
             for (int i = 0; i < currentItems.length; i++) {
                 currentItems[i] = currentAvailableItems.get(i); // Take first 3 after shuffle
@@ -98,9 +83,10 @@ public class YardSaleScene extends Scene {
             }
 
             SaleItem selectedItem = currentItems[choice - 1]; // Adjust for 0-based array index
-            String itemName = selectedItem.name;
-            double cost = selectedItem.basePrice;
-            double maxResell = selectedItem.maxResell;
+            // Using getter methods for encapsulation
+            String itemName = selectedItem.getName();
+            double cost = selectedItem.getBasePrice();
+            double maxResell = selectedItem.getMaxResell();
 
             // Bargaining
             System.out.println("\nNice choice! The " + itemName + " is $" + String.format("%.2f", cost) + ".");
@@ -120,8 +106,8 @@ public class YardSaleScene extends Scene {
 
             // Confirm purchase
             System.out.println("Buy the " + itemName + " for $" + String.format("%.2f", cost) + "? (y/n)");
-            if (!scanner.nextLine().toLowerCase().toLowerCase().startsWith("y")) { 
-                System.out.println("You pass on the deal. Back to browsing...");
+            if (!scanner.nextLine().toLowerCase().toLowerCase().startsWith("y")) {
+                System.out.println("You pass on the deal. Back to Browse...");
                 continue; // Loop back to item selection
             }
 
@@ -136,7 +122,7 @@ public class YardSaleScene extends Scene {
             System.out.println("Snagged the " + itemName + " for $" + String.format("%.2f", cost) + ".");
 
             // --- Random Loss Event ---
-            if (random.nextInt(100) < LOSS_CHANCE_PERCENT) { 
+            if (random.nextInt(100) < LOSS_CHANCE_PERCENT) {
                 int misfortuneType = random.nextInt(2); // 0 for broke, 1 for didn't sell
                 if (misfortuneType == 0) {
                     System.out.println("\nOH NO! While transporting, your " + itemName + " accidentally broke! It's worthless now.");

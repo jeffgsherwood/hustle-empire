@@ -9,24 +9,7 @@ import java.util.List;
 
 public class FleaMarketScene extends Scene {
 
-    // Inner class to represent an item (re-used from YardSaleScene, could be moved to Scene abstract class)
-    private static class SaleItem {
-        String name;
-        double basePrice;
-        double maxResell;
-
-        public SaleItem(String name, double basePrice, double maxResell) {
-            this.name = name;
-            this.basePrice = basePrice;
-            this.maxResell = maxResell;
-        }
-
-        @Override
-        public String toString() {
-            return name + " - Price: $" + String.format("%.2f", basePrice) + " - Resell Value: up to $" + String.format("%.2f", maxResell);
-        }
-    }
-
+    
     // List of all possible items specific to a Flea Market
     private static final List<SaleItem> ALL_POSSIBLE_ITEMS = Arrays.asList(
         new SaleItem("Rare Vinyl Record (Limited Edition)", 80.0, 200.0), // High value
@@ -97,9 +80,10 @@ public class FleaMarketScene extends Scene {
             }
 
             SaleItem selectedItem = currentItems[choice - 1]; // Adjust for 0-based array index
-            String itemName = selectedItem.name;
-            double cost = selectedItem.basePrice;
-            double maxResell = selectedItem.maxResell;
+            // Corrected to use getter methods for encapsulation
+            String itemName = selectedItem.getName();
+            double cost = selectedItem.getBasePrice();
+            double maxResell = selectedItem.getMaxResell();
 
             // Bargaining
             System.out.println("\nYou're looking at the " + itemName + ". The vendor is asking $" + String.format("%.2f", cost) + ".");
