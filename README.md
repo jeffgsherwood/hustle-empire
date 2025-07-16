@@ -26,7 +26,7 @@ A text-based console game built with Java 17, where you embody a budding entrepr
 ### Steps
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/jeffgsherwood/hustle-empire.git](https://github.com/jeffgsherwood/hustle-empire.git)
+    git clone https://github.com/jeffgsherwood/hustle-empire.git
     ```
 2.  **Navigate to the Project Directory:**
     ```bash
