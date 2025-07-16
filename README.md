@@ -13,7 +13,9 @@ A text-based console game built with Java 17, where you embody a budding entrepr
 * **Interactive Scenes:**
     * **Yard Sale:** Start small, finding everyday items and honing your bargaining skills.
     * **Flea Market:** Step up your game with higher-value items, offering bigger risks and rewards.
+    * **Estate Auction:** Step into the grand halls of an estate auction, where hidden treasures await the keen eye and swift bid!
 * **Randomized Outcomes:** Experience the unpredictable nature of the market with random item selection, price fluctuations, and occasional "loss events."
+* **Bid Against NPC:** Test your skills while bidding for high value items against Non Player Characters. 
 * **Replayability:** Option to restart a new game session after winning or losing.
 
 ## How to Run
@@ -47,12 +49,12 @@ A text-based console game built with Java 17, where you embody a budding entrepr
 * **Playable Scenes:**
     * Yard Sale (Functional)
     * Flea Market (Functional)
+    * Estate Auction (Functional)
 * **Future Scenes (Coming Soon):**
     * Thrift Store
-    * Estate Sale
     * Retail Arbitrage
 * **Inventory System:** Currently, items are bought and sold within the same scene. Future enhancement to allow players to hold items and sell them at a later time/location.
 * **More Item Variety & Dynamics:** Expand item lists and introduce more complex item characteristics (e.g., condition, rarity).
-* **Refactor `SaleItem`:** Move the `SaleItem` inner class to its own dedicated file for better reusability across scenes.
+
 
 ---
