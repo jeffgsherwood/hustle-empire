@@ -10,9 +10,10 @@ public class Player {
     private int bargaining;
     private int marketSense;
 
+    // Random number generator for name generation
     private static final Random random = new Random();
 
-    // Constructor
+    // Constructor to create a new player
     public Player(String name, double bankroll, int bargaining, int marketSense) {
         setName(name);
         setBankroll(bankroll);
@@ -22,10 +23,12 @@ public class Player {
         setMarketSense(marketSense);
     }
 
+    // Get player's name
     public String getName() {
         return name;
     }
 
+    // Set player's name, with default if empty
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             this.name = "Hustler" + (random.nextInt(1000) + 1);
@@ -34,42 +37,49 @@ public class Player {
         }
     }
 
+    // Get player's bankroll
     public double getBankroll() {
         return bankroll;
     }
 
+    // Set player's bankroll, ensure it's not negative
     public void setBankroll(double bankroll) {
         this.bankroll = Math.max(0, bankroll);
     }
 
+    // Get player's level
     public int getLevel() {
         return level;
     }
 
+    // Set player's level, minimum is 1
     public void setLevel(int level) {
         this.level = Math.max(1, level);
     }
 
+    // Get player's experience points
     public int getExperience() {
         return experience;
     }
 
+    // Set player's experience, ensure it's not negative
     public void setExperience(int experience) {
         this.experience = Math.max(0, experience);
     }
 
+    // Add experience points to player
     public void addExperience(int exp) {
         this.experience += Math.max(0, exp);
     }
 
-    // Helper method to get the XP needed for the next level
+    // Calculate XP needed for next level
     public int getExperienceRequiredForNextLevel() {
         return level * 100;
     }
 
+    // Level up player and increase skills
     public void levelUp() {
         level++;
-        // Skills increase, capped at 10
         bargaining = Math.min(10, bargaining + 1);
         marketSense = Math.min(10, marketSense + 1);
         System.out.println("\n*** LEVEL UP! ***");
@@ -79,22 +89,27 @@ public class Player {
         System.out.println("Keep hustling, " + name + "!\n");
     }
 
+    // Get player's bargaining skill
     public int getBargaining() {
         return bargaining;
     }
 
+    // Set bargaining skill, keep it between 0 and 10
     public void setBargaining(int bargaining) {
         this.bargaining = Math.min(Math.max(0, bargaining), 10);
     }
 
+    // Get player's market sense skill
     public int getMarketSense() {
         return marketSense;
     }
 
+    // Set market sense skill, keep it between 0 and 10
     public void setMarketSense(int marketSense) {
         this.marketSense = Math.min(Math.max(0, marketSense), 10);
     }
 
+    // Display player's stats
     @Override
     public String toString() {
         return "Player [Name=" + name +

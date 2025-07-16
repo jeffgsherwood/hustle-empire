@@ -1,15 +1,16 @@
 package com.jeffsherwood.hustleempire;
 
 import java.util.Scanner;
-import java.util.Random; // Though not used directly, good to keep consistent signature with other scenes
+import java.util.Random;
 
 public class WinGameScene extends Scene {
 
+    // Constructor to set up the scene
     public WinGameScene() {
         super("Victory!", "You've built your Hustle Empire!");
     }
 
-    
+    // Display victory message
     @Override
     public void play(Player player, Scanner scanner, Random random) {
         System.out.println("\n*******************************************");
@@ -22,7 +23,7 @@ public class WinGameScene extends Scene {
         System.out.println("*******************************************");
     }
 
-    // Restart Game
+    // Ask if player wants to restart
     public boolean askToRestart(Scanner scanner) {
         System.out.println("\nWould you like to start a new Hustle Empire? (y/n)");
         String choice = scanner.nextLine().toLowerCase();

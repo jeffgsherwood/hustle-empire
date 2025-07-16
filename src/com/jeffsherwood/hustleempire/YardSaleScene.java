@@ -9,31 +9,30 @@ import java.util.List;
 
 public class YardSaleScene extends Scene {
 
-    // The inner SaleItem class definition has been COMPLETELY REMOVED from this file.
-    // SaleItem is now a separate class in SaleItem.java.
-
-    // List of all possible items
+    // List of items available at the yard sale
     private static final List<SaleItem> ALL_POSSIBLE_ITEMS = Arrays.asList(
         new SaleItem("Antique oil lamp", 30.0, 75.0),
         new SaleItem("Framed art work", 50.0, 125.0),
         new SaleItem("Vintage video game system", 75.0, 150.0),
         new SaleItem("Dusty old comic book", 15.0, 60.0),
         new SaleItem("Retro action figure collection", 40.0, 110.0),
-        new SaleItem("Mystery box (could be anything!)", 20.0, 200.0), // Higher risk/reward
+        new SaleItem("Mystery box (could be anything!)", 20.0, 200.0),
         new SaleItem("Old vinyl records", 25.0, 85.0),
         new SaleItem("Antique teacup set", 35.0, 90.0)
     );
 
-    // Chance for item loss (e.g., something got broke/didn't sell)
-    private static final int LOSS_CHANCE_PERCENT = 20; // 20% chance of an issue
-    private static final int XP_GAIN_PER_SALE = 50; // Set XP gain to 50
+    // Chance of losing an item and XP for selling
+    private static final int LOSS_CHANCE_PERCENT = 20;
+    private static final int XP_GAIN_PER_SALE = 50;
 
+    // Constructor to set up the scene
     public YardSaleScene() {
         super("Neighborhood Yard Sale", "Multiple houses having a yard sale in close proximity.");
     }
 
     @Override
     public void play(Player player, Scanner scanner, Random random) {
+        // Welcome message
         System.out.println("\nWelcome to the " + name + ": " + description);
         System.out.println("You just got here and you're already finding great deals!");
 
@@ -41,62 +40,59 @@ public class YardSaleScene extends Scene {
         while (true) {
             System.out.println("\nHere are some items you found. Choose wisely...");
 
-            // Temporary list of items for this round to ensure uniqueness
+            // Pick 3 random items
             List<SaleItem> currentAvailableItems = new ArrayList<>(ALL_POSSIBLE_ITEMS);
-            Collections.shuffle(currentAvailableItems, random); // Shuffle to randomize order
-
-            // Select 3 unique items for the current visit
+            Collections.shuffle(currentAvailableItems, random);
             SaleItem[] currentItems = new SaleItem[Math.min(3, currentAvailableItems.size())];
             for (int i = 0; i < currentItems.length; i++) {
-                currentItems[i] = currentAvailableItems.get(i); // Take first 3 after shuffle
+                currentItems[i] = currentAvailableItems.get(i);
             }
 
-            // Display current items
+            // Show available items
             for (int i = 0; i < currentItems.length; i++) {
                 System.out.println((i + 1) + ". " + currentItems[i]);
             }
             System.out.println((currentItems.length + 1) + ". Leave Yard Sale without buying anything");
 
-            // Get user choice
+            // Get player's choice
             int choice;
             while (true) {
                 System.out.print("Input your selection below (1-" + (currentItems.length + 1) + "): ");
                 if (scanner.hasNextInt()) {
                     choice = scanner.nextInt();
-                    scanner.nextLine(); // Clear newline
+                    scanner.nextLine();
                     if (choice >= 1 && choice <= (currentItems.length + 1)) {
-                        break; // Valid input
+                        break;
                     } else {
                         System.out.println("Invalid choice! Pick a number between 1 and " + (currentItems.length + 1) + "!");
                     }
                 } else {
                     System.out.println("Enter a number!");
-                    scanner.next(); // Clear invalid input
-                    scanner.nextLine(); // Consume leftover newline after scanner.next()
+                    scanner.next();
+                    scanner.nextLine();
                 }
             }
 
-            // Exit if leaving
+            // Exit if player chooses to leave
             if (choice == (currentItems.length + 1)) {
                 System.out.println("Aight, you’re leaving the Yard Sale empty-handed.");
-                return; // Exit the scene
+                return;
             }
 
-            SaleItem selectedItem = currentItems[choice - 1]; // Adjust for 0-based array index
-            // Using getter methods for encapsulation
+            // Get selected item details
+            SaleItem selectedItem = currentItems[choice - 1];
             String itemName = selectedItem.getName();
             double cost = selectedItem.getBasePrice();
             double maxResell = selectedItem.getMaxResell();
 
-            // Bargaining
+            // Bargaining attempt
             System.out.println("\nNice choice! The " + itemName + " is $" + String.format("%.2f", cost) + ".");
             System.out.println("Would you like to bargain for a lower price? (y/n)");
             String betterPrice = scanner.nextLine().toLowerCase().trim();
 
             if (betterPrice.startsWith("y")) {
-                // Player's bargaining skill vs. a random roll (higher bargaining means better chance)
                 if (random.nextInt(10) < player.getBargaining()) {
-                    double discount = 1.0 - (player.getBargaining() * 0.05); // 5% off per Bargaining point (max 50% at 10 skill)
+                    double discount = 1.0 - (player.getBargaining() * 0.05);
                     cost *= discount;
                     System.out.println("Dope haggle! You got it for $" + String.format("%.2f", cost) + "!");
                 } else {
@@ -106,52 +102,52 @@ public class YardSaleScene extends Scene {
 
             // Confirm purchase
             System.out.println("Buy the " + itemName + " for $" + String.format("%.2f", cost) + "? (y/n)");
-            if (!scanner.nextLine().toLowerCase().toLowerCase().startsWith("y")) {
+            if (!scanner.nextLine().toLowerCase().startsWith("y")) {
                 System.out.println("You pass on the deal. Back to Browse...");
-                continue; // Loop back to item selection
+                continue;
             }
 
-            // Check funds
+            // Check if player has enough money
             if (player.getBankroll() < cost) {
                 System.out.println("Not enough cash, hustler! Pick something cheaper.");
                 continue;
             }
 
-            // Buy item
+            // Buy the item
             player.setBankroll(player.getBankroll() - cost);
             System.out.println("Snagged the " + itemName + " for $" + String.format("%.2f", cost) + ".");
 
-            // --- Random Loss Event ---
+            // Check for random loss event
             if (random.nextInt(100) < LOSS_CHANCE_PERCENT) {
-                int misfortuneType = random.nextInt(2); // 0 for broke, 1 for didn't sell
+                int misfortuneType = random.nextInt(2);
                 if (misfortuneType == 0) {
                     System.out.println("\nOH NO! While transporting, your " + itemName + " accidentally broke! It's worthless now.");
                     System.out.println("You lose the $" + String.format("%.2f", cost) + " you paid.");
-                    player.addExperience(5); // Still get a little XP for the lesson learned
+                    player.addExperience(5);
                     System.out.println("Lesson learned! +5 XP. Better luck next time!");
                 } else {
                     System.out.println("\nBummer! You listed your " + itemName + " online, but nobody wanted it. It just wouldn't sell!");
                     System.out.println("You lose the $" + String.format("%.2f", cost) + " you paid.");
-                    player.addExperience(5); // Still get a little XP for the lesson learned
+                    player.addExperience(5);
                     System.out.println("Tough market! +5 XP. Gotta know your audience!");
                 }
-                return; // Exit scene after a loss event, regardless of profit
+                return;
             }
 
-            // Sell item (only if no loss event occurred)
-            double sellPrice = maxResell * (0.5 + random.nextDouble() * 0.5); // 50-100% of max resell
+            // Sell the item
+            double sellPrice = maxResell * (0.5 + random.nextDouble() * 0.5);
             if (random.nextInt(10) < player.getMarketSense()) {
-                sellPrice *= 1.3; // 30% bonus for high Market Sense
+                sellPrice *= 1.3;
                 System.out.println("Killer eBay flip! Sold the " + itemName + " for $" + String.format("%.2f", sellPrice) + "!");
             } else {
                 System.out.println("Sold the " + itemName + " on eBay for $" + String.format("%.2f", sellPrice) + ".");
             }
 
-            // Update player bankroll and experience
+            // Update player's bankroll and XP
             player.setBankroll(player.getBankroll() + sellPrice);
-            player.addExperience(XP_GAIN_PER_SALE); // Use constant for XP gain
+            player.addExperience(XP_GAIN_PER_SALE);
             System.out.println("Profit: $" + String.format("%.2f", (sellPrice - cost)) + " | +" + XP_GAIN_PER_SALE + " XP");
-            return; // Exit scene after a successful transaction
+            return;
         }
     }
 }
